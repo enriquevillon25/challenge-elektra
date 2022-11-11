@@ -77,6 +77,10 @@ code {
 .mb-10 {
   margin-bottom: 10px;
 }
+
+.m-auto {
+  margin: auto;
+}
 .color-primary {
   color: #1976d2;
 }
@@ -84,3 +88,4 @@ code {
 .bground-primary {
   background: #1976d2;
 }
+

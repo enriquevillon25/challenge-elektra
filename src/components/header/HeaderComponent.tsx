@@ -8,8 +8,7 @@ import { Link } from "react-router-dom";
 import "./HeaderComponent.styles.css";
 import { AuthContext } from "../../context/authContext";
 export const HeaderComponent = () => {
-  const { validateToken, logout } = useContext(AuthContext);
-  const isValid = validateToken();
+  const { isAuthenticated, logout } = useContext(AuthContext);
 
   return (
     <AppBar position="static">
@@ -19,7 +18,7 @@ export const HeaderComponent = () => {
             Grupo Salinas
           </Link>
         </Typography>
-        {!isValid && (
+        {!isAuthenticated && (
           <Button color="inherit">
             <Link
               to="/"
@@ -29,7 +28,7 @@ export const HeaderComponent = () => {
             </Link>
           </Button>
         )}
-        {isValid && (
+        {isAuthenticated && (
           <>
             <Button color="inherit">
               <Link

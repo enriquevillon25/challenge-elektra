@@ -94,6 +94,7 @@ export const EmployeeScreen = () => {
       return data;
     });
   };
+  
   useEffect(() => {
     listEmployees();
     // eslint-disable-next-line react-hooks/exhaustive-deps

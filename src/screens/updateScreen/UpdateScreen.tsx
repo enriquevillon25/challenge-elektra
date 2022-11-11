@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export const UpdateScreen = () => {
   const [imageSelectedPrevious, setImageSelectedPrevious] = useState("");
   const [totalImages, setTotalImages] = useState([]);
   const changeImage = (e: any) => {
-    console.log(e.target.files);
     if (e.target.files[0] !== undefined) {
       const reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
@@ -16,10 +18,14 @@ export const UpdateScreen = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("TOTAL IMAGES", totalImages);
-  }, [totalImages]);
-
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    initialSlide: 0,
+  };
   return (
     <>
       <div className="flex col justify-center align-center mt-10">
@@ -49,9 +55,6 @@ export const UpdateScreen = () => {
               }}
             />
           </label>
-          {/* <div>
-            <h3 className="color-primary"> Preview image with drag and drop</h3>
-          </div> */}
         </div>
       </div>
       {imageSelectedPrevious && (
@@ -65,10 +68,27 @@ export const UpdateScreen = () => {
         </div>
       )}
 
-      <div>
-        {/* {
-            totalImages.map()
-          } */}
+      <div className="w-50 m-auto">
+        <h2 className="text-center"> Library Upload Images</h2>
+        <Slider {...settings}>
+          {totalImages?.map((images, index) => {
+            return (
+              <div
+                key={index}
+                style={{
+                  background: "red",
+                  border: "1px solid black",
+                }}
+              >
+                <img
+                  src={images}
+                  style={{ width: "100px", height: "100px" }}
+                  alt={"prop"}
+                />
+              </div>
+            );
+          })}
+        </Slider>
       </div>
     </>
   );

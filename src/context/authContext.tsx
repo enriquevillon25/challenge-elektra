@@ -1,12 +1,13 @@
 import { StorageKeys } from "../utils/constants/storage-keys";
 import { createContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 const initialState = {
   isAuthenticated: false,
+  isValidating: true,
   isLoading: false,
   authenticationError: null,
-  login: (username: string, password: string) => {},
-  logout: () => {},
+  login: (username: string, password: string) => { },
+  logout: () => { },
   validateToken: () => false,
 };
 
@@ -18,20 +19,20 @@ export const AuthContextProvider = ({ children }: any) => {
     initialState.isAuthenticated
   );
   const [isLoading, setIsLoading] = useState(initialState.isLoading);
+  const [isValidating, setIsValidating] = useState(initialState.isValidating);
   const [authenticationError, setAuthenticationError] = useState(
     initialState.authenticationError
   );
 
   const validateToken = () => {
     const token = localStorage.getItem(StorageKeys.token);
-    if (token) {
-      const fakeToken = `${process.env.REACT_APP_FAKE_USERNAME}-${process.env.REACT_APP_FAKE_PASSWORD}`;
-      if (token === fakeToken) {
-        setIsAuthenticated(true);
-        return true;
-      }
-      return false;
+    const fakeToken = `${process.env.REACT_APP_FAKE_USERNAME}-${process.env.REACT_APP_FAKE_PASSWORD}`;
+    if (token && token === fakeToken) {
+      setIsAuthenticated(true);
+      setIsValidating(false);
+      return true;
     }
+    setIsValidating(false);
     return false;
   };
   const fakeLoginService = (username: string, password: string) => {
@@ -79,6 +80,7 @@ export const AuthContextProvider = ({ children }: any) => {
       value={{
         isAuthenticated,
         isLoading,
+        isValidating,
         authenticationError,
         login,
         logout,

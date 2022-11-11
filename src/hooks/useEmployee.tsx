@@ -6,7 +6,6 @@ export const useEmployee = () => {
   const listGetAllEmployee = () => {
     getAllEmployees().then((response) => {
       setEmployees(response.data);
-      console.log(employees);
     });
   };
 
