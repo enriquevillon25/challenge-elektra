@@ -16,7 +16,6 @@ export const HomeScreen = () => {
     e.preventDefault();
   };
   const handleLogin = () => {
-    console.log("hola");
     login(username, password);
   };
   return (
@@ -24,7 +23,7 @@ export const HomeScreen = () => {
       <form className="container__form">
         <TextField
           id="outlined-basic"
-          label="Usuario"
+          label="User"
           variant="outlined"
           color="primary"
           required
@@ -38,7 +37,8 @@ export const HomeScreen = () => {
         />
         <TextField
           id="outlined-basic"
-          label="Contraseña"
+          label="Password"
+          type="password"
           variant="outlined"
           color="primary"
           required

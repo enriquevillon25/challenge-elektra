@@ -114,6 +114,7 @@ export const EmployeeScreen = () => {
       birthday: convertDateToTime(newEmployeeBirthday),
     }).then((response) => {
       if (response) {
+        console.log("response", response);
         setNewEmployeeBirthday("");
         setNewEmployeeLastName("");
         setNewEmployeeName("");
@@ -127,9 +128,22 @@ export const EmployeeScreen = () => {
       <div
         style={{
           margin: "1%",
+          gap: '20px'
         }}
-        className="flex justify-end"
+        className="flex justify-center"
       >
+        <div className="flex justify-center">
+          <TextField
+            id="outlined-basic"
+            label="Search a employee"
+            variant="outlined"
+            color="primary"
+            onChange={(e: any) => {
+              setEmployeSearch(e.target.value.toUpperCase());
+            }}
+            value={employeSearch}
+          />
+        </div>
         <Button
           variant="outlined"
           className="flex gap-xsm"
@@ -139,21 +153,9 @@ export const EmployeeScreen = () => {
           <PersonAddAlt1Icon />
         </Button>
       </div>
-      <div className="flex justify-center">
-        <TextField
-          id="outlined-basic"
-          label="Search a employee"
-          variant="outlined"
-          color="primary"
-          onChange={(e: any) => {
-            setEmployeSearch(e.target.value.toUpperCase());
-          }}
-          value={employeSearch}
-        />
-      </div>
       <div
         style={{
-          height: 500,
+          height: 600,
         }}
         className="flex justify-center align-center"
       >
@@ -184,7 +186,7 @@ export const EmployeeScreen = () => {
           >
             Add a new employee
           </Typography>
-          <form className="flex col gap-sm" onSubmit={handleSubmit}>
+          <form className="flex col gap-sm">
             <TextField
               id="outlined-basic"
               label="Name"
@@ -233,7 +235,9 @@ export const EmployeeScreen = () => {
               <Button
                 variant="contained"
                 endIcon={<SendIcon />}
-                type="submit"
+                onClick={() => {
+                  handleSubmit();
+                }}
                 disabled={
                   !newEmployeeName ||
                   newEmployeeName.length < 3 ||

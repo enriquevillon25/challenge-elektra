@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export const UpdateScreen = () => {
-  const [ImageSelectedPrevious, setImageSelectedPrevious] = useState("");
+  const [imageSelectedPrevious, setImageSelectedPrevious] = useState("");
+  const [totalImages, setTotalImages] = useState([]);
   const changeImage = (e: any) => {
     console.log(e.target.files);
     if (e.target.files[0] !== undefined) {
@@ -9,11 +10,16 @@ export const UpdateScreen = () => {
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = (e: any) => {
         e.preventDefault();
-        console.log("render", e.target.result);
-        setImageSelectedPrevious(e.target.result); // le damos el binario de la imagen para mostrarla en pantalla
+        setImageSelectedPrevious(e.target.result);
+        setTotalImages((totalImages) => totalImages.concat(e.target.result));
       };
     }
   };
+
+  useEffect(() => {
+    console.log("TOTAL IMAGES", totalImages);
+  }, [totalImages]);
+
   return (
     <>
       <div className="flex col justify-center align-center mt-10">
@@ -48,16 +54,22 @@ export const UpdateScreen = () => {
           </div> */}
         </div>
       </div>
-      {ImageSelectedPrevious && (
+      {imageSelectedPrevious && (
         <div className="flex justify-center align-center mt-10">
           <img
-            src={ImageSelectedPrevious}
+            src={imageSelectedPrevious}
             alt=""
             height="150px"
             width="250px"
           />
         </div>
       )}
+
+      <div>
+        {/* {
+            totalImages.map()
+          } */}
+      </div>
     </>
   );
 };
