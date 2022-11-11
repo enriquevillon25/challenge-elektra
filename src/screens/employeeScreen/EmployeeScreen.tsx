@@ -10,6 +10,7 @@ import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { EmployeeAxiosClient } from "../../config/EmployeeAxiosClient";
 import { useEmployee } from "../../hooks/useEmployee";
+import { convertDateToTime } from "../../utils/convertTimeToDate";
 
 const columns: GridColDef[] = [
   {
@@ -63,10 +64,6 @@ export const EmployeeScreen = () => {
   const [newEmployeeName, setNewEmployeeName] = useState<string>("");
   const [newEmployeeLastName, setNewEmployeeLastName] = useState<string>("");
   const [newEmployeeBirthday, setNewEmployeeBirthday] = useState<string>("");
-
-  const convertDateToTime = (date: string) => {
-    return new Date(date).getTime();
-  };
 
   const employeesRender = () =>
     employees.filter((employee: Employee) => {
