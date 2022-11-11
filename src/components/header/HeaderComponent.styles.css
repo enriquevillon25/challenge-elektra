@@ -1,0 +1,11 @@
+.container__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1% 5%;
+  border: 1px solid red;
+  align-items: center;
+}
+.image__logo {
+  width: 10%;
+}
