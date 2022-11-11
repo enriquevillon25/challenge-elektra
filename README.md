@@ -33,5 +33,9 @@ contraseña: test
 usuario: prod
 contraseña: prod
 
+DEPLOY A PRODUCCIÓN
+
+npm run build
+
 ¡Muchas gracias por la oportunidad me he divertido mucho implementando este proyecto!
 

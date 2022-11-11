@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import { Employee } from "../../interfaces/Employee";
@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import SendIcon from "@mui/icons-material/Send";
 import { EmployeeAxiosClient } from "../../config/EmployeeAxiosClient";
+import { useEmployee } from "../../hooks/useEmployee";
 
 const columns: GridColDef[] = [
   {
@@ -54,7 +55,7 @@ const style = {
 };
 
 export const EmployeeScreen = () => {
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const { employees, getAllEmployees } = useEmployee();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -63,42 +64,9 @@ export const EmployeeScreen = () => {
   const [newEmployeeLastName, setNewEmployeeLastName] = useState<string>("");
   const [newEmployeeBirthday, setNewEmployeeBirthday] = useState<string>("");
 
-  const convertTimeToDate = (timeStamp: number) => {
-    const date = new Date(timeStamp);
-    return (
-      date.getDate() +
-      1 +
-      "/" +
-      (date.getMonth() + 1) +
-      "/" +
-      date.getFullYear()
-    );
-  };
-
   const convertDateToTime = (date: string) => {
     return new Date(date).getTime();
   };
-
-  const listEmployees = () => {
-    EmployeeAxiosClient.get("v1/examen/employees/Enrique").then((response) => {
-      const { data } = response;
-      const employeesFormat = data.data.employees.map((employee: Employee) => {
-        return {
-          id: employee.id,
-          name: employee.name,
-          last_name: employee.last_name,
-          birthday: convertTimeToDate(employee.birthday),
-        };
-      });
-      setEmployees(employeesFormat);
-      return data;
-    });
-  };
-  
-  useEffect(() => {
-    listEmployees();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const employeesRender = () =>
     employees.filter((employee: Employee) => {
@@ -115,11 +83,10 @@ export const EmployeeScreen = () => {
       birthday: convertDateToTime(newEmployeeBirthday),
     }).then((response) => {
       if (response) {
-        console.log("response", response);
         setNewEmployeeBirthday("");
         setNewEmployeeLastName("");
         setNewEmployeeName("");
-        listEmployees();
+        getAllEmployees();
       }
     });
   };
@@ -129,7 +96,7 @@ export const EmployeeScreen = () => {
       <div
         style={{
           margin: "1%",
-          gap: '20px'
+          gap: "20px",
         }}
         className="flex justify-center"
       >
